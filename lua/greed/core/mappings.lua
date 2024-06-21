@@ -42,6 +42,26 @@ map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new
 
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+
+-- tabufline
+map("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
+
+map("n", "<tab>", function()
+  require("nvchad.tabufline").next()
+end, { desc = "buffer goto next" })
+
+map("n", "<S-tab>", function()
+  require("nvchad.tabufline").prev()
+end, { desc = "buffer goto prev" })
+
+map("n", "<leader>x", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "buffer close" })
+
+-- Comment
+map("n", "<leader>/", "gcc", { desc = "comment toggle", remap = true })
+map("v", "<leader>/", "gc", { desc = "comment toggle", remap = true })
+
 --map({ "n", "v", "i", "t" }, "<C-b>", function()
 --  require("nvchad.term").runner {
 --    id = "RunAndBuildTerminal",
@@ -77,7 +97,6 @@ map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = 
 map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
-map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map(
   "n",
@@ -85,3 +104,52 @@ map(
   "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
   { desc = "telescope find all files" }
 )
+
+-- terminal
+map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+
+-- new terminals
+map("n", "<leader>h", function()
+  require("nvchad.term").new { pos = "sp" }
+end, { desc = "terminal new horizontal term" })
+
+map("n", "<leader>v", function()
+  require("nvchad.term").new { pos = "vsp" }
+end, { desc = "terminal new vertical window" })
+
+-- toggleable
+map({ "n", "t" }, "<A-v>", function()
+  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+end, { desc = "terminal toggleable vertical term" })
+
+map({ "n", "t" }, "<A-h>", function()
+  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+end, { desc = "terminal new horizontal term" })
+
+map({ "n", "t" }, "<A-i>", function()
+  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+end, { desc = "terminal toggle floating term" })
+
+
+map({ "n", "v", "i", "t" }, "<C-b>", function()
+  require("nvchad.term").runner {
+    id = "RunAndBuildTerminal",
+    pos = "float",
+    cmd = function()
+      local file = vim.fn.expand "%"
+      local sfile = vim.fn.expand "%:r"
+      local ft_cmds = {
+        sh = "bash " .. file,
+        rust = "cargo " .. file,
+        python = "python3 " .. file,
+        javascript = "node " .. file,
+        java = "javac " .. file .. " && java " .. sfile,
+        go = "go build && go run " .. file,
+        c = "g++ " .. file .. " -o " .. sfile .. " && ./" .. sfile,
+        cpp = "g++ " .. file .. " -o " .. sfile .. " && ./" .. sfile,
+        typescript = "deno compile " .. file .. " && deno run " .. file,
+      }
+      return ft_cmds[vim.bo.ft]
+    end,
+  }
+end, { desc = "Build and Run file" })
