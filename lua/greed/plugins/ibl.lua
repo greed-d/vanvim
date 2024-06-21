@@ -1,20 +1,15 @@
-return  {
+return {
     "lukas-reineke/indent-blankline.nvim",
-    event = "User FilePost",
+    main = "ibl",
+    ft = { "yaml" },
     opts = {
-      indent = { char = "│", highlight = "IblChar" },
-      scope = { char = "│", highlight = "IblScopeChar" },
+        indent = { char = "│" },
+        scope = {
+            show_start = false,
+            show_end = false,
+        },
+        exclude = {
+            buftypes = { "terminal", "nofile" },
+        },
     },
---    config = function(_, opts)
---      dofile(vim.g.base46_cache .. "blankline")
---
---      local hooks = require "ibl.hooks"
---      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
---      require("ibl").setup(opts)
---
---      dofile(vim.g.base46_cache .. "blankline")
---    end,
-    config = function(opts)
-      require("ibl").setup(opts)
-    end
 }
