@@ -1,5 +1,6 @@
 return {
     "folke/todo-comments.nvim",
+    event = "BufReadPre",
     keys = {
         {
             "tn",

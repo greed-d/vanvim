@@ -27,7 +27,7 @@ M.on_attach = function(client, bufnr)
 
     -- stylua: ignore start
     local trouble = require("trouble").toggle
-    nmap("<leader>tt", function() trouble() end, "Toggle Trouble")
+    -- nmap("<leader>tt", function() trouble("diagnostics")  = false end, "Toggle Trouble")
     nmap("<leader>tq", function() trouble("quickfix") end, "Quickfix List")
     nmap("<leader>dr", function() trouble("lsp_references") end, "References")
     nmap("<leader>dd", function() trouble("document_diagnostics") end, "Document Diagnostics")

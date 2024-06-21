@@ -35,21 +35,19 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
     border = "rounded",
 })
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     signs = true,
     underline = true,
     virtual_text = {
         spacing = 5,
-        min = severity,
     },
     update_in_insert = true,
 })
 
 vim.keymap.set("n", "dn", vim.diagnostic.goto_next)
 vim.keymap.set("n", "dN", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
-vim.keymap.set("n", "<leader>o", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+vim.keymap.set("n", "<leader>ld", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+vim.keymap.set("n", "<leader>fd", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
@@ -59,7 +57,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         })
     end,
 })
-
+lkdjfkdjf
+ldkjfdkjf
 -- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()

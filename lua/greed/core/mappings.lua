@@ -153,3 +153,5 @@ map({ "n", "v", "i", "t" }, "<C-b>", function()
     end,
   }
 end, { desc = "Build and Run file" })
+
+map({"n", "v"},"<leader>tt", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Toggle trouble" })
